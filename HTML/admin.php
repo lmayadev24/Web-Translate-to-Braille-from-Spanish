@@ -1,5 +1,10 @@
 <?php
 include_once '../PHP/textos.php';
+include_once '../PHP/consultas.php';
+include_once '../PHP/conexion.php';
+session_start(); //Iniciando una sesion
+
+$con = conectar();
 ?>
 
 <!DOCTYPE html>
@@ -47,10 +52,24 @@ include_once '../PHP/textos.php';
                             <a class="btn btn-link boton-btn" aria-current="page" href="#">Lecciones</a>
                         </li>
 
-                        <!-- Button offcanvas  -->
-                        <li class="nav-item me-1">
-                            <button type="button" class="btn btn-link boton-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLogin" aria-controls="offcanvasWithBothOptions">Ingresa</button>
-                        </li>
+                        <?php if (isset($_SESSION['nivel']) && ($_SESSION['nivel'] === 'Administrador' || $_SESSION['nivel'] === 'Supervisor')): ?>
+                            <!-- HTML que solo se muestra si el usuario es Administrador o Supervisor -->
+                            <li class="nav-item me-1">
+                                <a class="btn btn-link boton-btn" href="admin.php">Dashboard</a>
+                            </li>
+                        <?php endif; ?>
+
+                        <?php if (empty($_SESSION['usuario'])): ?>
+                            <!-- HTML que solo se muestra si el usuario es Administrador o Supervisor -->
+                            <li class="nav-item me-1">
+                                <button type="button" class="btn btn-link boton-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLogin" aria-controls="offcanvasWithBothOptions">Ingresa</button>
+                            </li>
+                        <?php else: ?>
+                            <!-- Button offcanvas  -->
+                            <li class="nav-item me-1">
+                                <button type="button" class="btn btn-link boton-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLogin" aria-controls="offcanvasWithBothOptions">Usuario</button>
+                            </li>
+                        <?php endif; ?>
                     </ul>
 
                 </div>
@@ -59,35 +78,40 @@ include_once '../PHP/textos.php';
     </header>
 
     <!-- TABLE -->
-    <main class="container bg-light text-dark pt-2 pb-2">        
+    <main class="container bg-light text-dark pt-2 pb-2">
+
+        
+
         <table class="table">
             <thead>
                 <tr>
                 <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido Paterno</th>
+                <th scope="col">Apellido Materno</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Email</th>
+                <th scope="col">Nivel</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                </tr>
-                <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                </tr>
-                <tr>
-                <th scope="row">3</th>
-                <td>John</td>
-                <td>Doe</td>
-                <td>@social</td>
-                </tr>
+                <?php
+                    $datos = datos($con);
+                    
+                    $datos = datos($con);
+                    while($fila = $datos->fetch_assoc()){
+                        ?>
+                        <tr>
+                            <th scope="row"> <?php echo $fila['ID_Usuario'] ?> </th>
+                            <td> <?php echo $fila['Nombre'] ?> </td>
+                            <td> <?php echo $fila['aPaterno'] ?> </td>
+                            <td> <?php echo $fila['aMaterno'] ?> </td>
+                            <td> <?php echo $fila['Usuario'] ?> </td>
+                            <td> <?php echo $fila['Correo'] ?> </td>  
+                            <td> <?php echo $fila['nivel'] ?>  </td>
+                        </tr>
+                    <?php } 
+                ?>
             </tbody>
         </table>
     </main>

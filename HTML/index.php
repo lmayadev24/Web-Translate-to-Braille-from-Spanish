@@ -1,5 +1,6 @@
 <?php
     include_once '../PHP/textos.php';
+    session_start(); //Iniciando una sesion
 ?>
 
 <!DOCTYPE html>
@@ -47,10 +48,24 @@
                             <a class="btn btn-link boton-btn" aria-current="page" href="#">Lecciones</a>
                         </li>
 
-                        <!-- Button offcanvas  -->
-                        <li class="nav-item me-1">
-                            <button type="button" class="btn btn-link boton-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLogin" aria-controls="offcanvasWithBothOptions">Ingresa</button>
-                        </li>
+                        <?php if (isset($_SESSION['nivel']) && ($_SESSION['nivel'] === 'Administrador' || $_SESSION['nivel'] === 'Supervisor')): ?>
+                            <!-- HTML que solo se muestra si el usuario es Administrador o Supervisor -->
+                            <li class="nav-item me-1">
+                                <a class="btn btn-link boton-btn" href="admin.php">Dashboard</a>
+                            </li>
+                        <?php endif; ?>
+
+                        <?php if (empty($_SESSION['usuario'])): ?>
+                            <!-- HTML que solo se muestra si el usuario es Administrador o Supervisor -->
+                            <li class="nav-item me-1">
+                                <button type="button" class="btn btn-link boton-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLogin" aria-controls="offcanvasWithBothOptions">Ingresa</button>
+                            </li>
+                        <?php else: ?>
+                            <!-- Button offcanvas  -->
+                            <li class="nav-item me-1">
+                                <button type="button" class="btn btn-link boton-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLogin" aria-controls="offcanvasWithBothOptions">Usuario</button>
+                            </li>
+                        <?php endif; ?>
                     </ul>
 
                 </div>

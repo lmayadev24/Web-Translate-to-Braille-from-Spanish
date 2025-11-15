@@ -1,42 +1,47 @@
 <?php
 ob_start();
-session_start();
+session_start(); //Inicia sesion
+session_unset(); //Limpia valores antiguos
 
 include 'conexion.php';
 $con = conectar();
 
-$User = htmlspecialchars($_POST['usuario']??'');
-$Password = htmlspecialchars($_POST['contrasena']??'');
+$User = $_POST['usuario'] ?? '';
+$Password = $_POST['contrasena'] ?? '';
 
 login($con, $User, $Password);
 
 function login($con, $User, $Password){
     try{
-        $consulta = "SELECT * 
-        FROM usuarios
-        WHERE Usuario = '".$User."' and Contrasena = '".$Password."'";
-
-        $resultado = $con -> query($consulta);
+        // Consulta usando prepared statements
+        $stmt = $con->prepare("SELECT Usuario, Nombre, nivel 
+                            FROM usuarios 
+                            WHERE Usuario = ? AND Contrasena = ?");
+        $stmt->bind_param("ss", $User, $Password);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
 
         if ($resultado && $resultado->num_rows > 0) {
             $usuario = $resultado->fetch_assoc();
 
-            $_SESSION['nivel'] = $usuario['nivel']; //Mantemos el nivel de usuario
+            session_regenerate_id(true); // Nueva sesión segura
+            
+            // Guardar datos esenciales del usuario en la sesión
+            $_SESSION['usuario'] = $usuario['Usuario'];
+            $_SESSION['nombre'] = $usuario['Nombre'];
+            $_SESSION['nivel'] = $usuario['nivel'];
 
-            if ($_SESSION['nivel'] == 'admin') {
-                header("Location: ../HTML/admin.php");
-            } else {
-                header("Location: ../HTML/index.php");
-            }
+            // Redirección
+            header("Location: ../HTML/index.php");
             exit;
 
-        } else { 
+        } else {
             header("Location: ../HTML/index.php?error=1");
             exit;
         }
 
-    }catch(Exception $e){
-        echo "El error es: ".$e->getMessage();
+    } catch(Exception $e){
+        echo "Error: ".$e->getMessage();
     }
 }
 ob_end_flush();
