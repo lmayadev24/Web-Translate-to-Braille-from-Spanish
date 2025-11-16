@@ -58,12 +58,12 @@ body {
 
 /* Boton con cambio de color*/
 .nav-link.nav-btn {
-    color: black !important;
-    text-decoration: none !important;
+    color: black;
+    text-decoration: none;
 }
 
 .nav-link.nav-btn:hover {
-    color: #fff6e0 !important;
+    color: #fff6e0;
 }
 
 .nav-link.footer-btn {
@@ -115,4 +115,11 @@ body {
     background-color: white !important;
     color: #6c757d;
     opacity: 1;
+}
+
+.table-link{
+    color: blue;
+}
+.table-link:hover{
+    color: red;
 }

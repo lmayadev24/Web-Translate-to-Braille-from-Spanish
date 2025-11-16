@@ -159,19 +159,19 @@
     </footer>
 
     <!-- OffCANVAS Accounts -->
-    <aside class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offCanvasAccounts" aria-labelledby="offcanvaOfAccount">
+    <aside class="offcanvas offcanvas-end text-bg-dark" data-bs-backdrop="static" tabindex="-1" id="offCanvasAccounts" aria-labelledby="offcanvaOfAccount">
 
         <?php if (empty($_SESSION['usuario'])): ?>
             <header class="offcanvas-header">
                 <h2 class="offcanvas-title" id="offcanvaOfAccount">Inicio de sesión</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
             </header>
 
             <hr class="mb-2 hr-grueso">
 
             <section class="offcanvas-body">
                 <form action="../php/login.php" method="POST" onsubmit="return valUser(this.elements['usuario'].value, this.elements['contrasena'].value);" 
-                    class="p-3 border rounded bg-light shadow-sm needs-validation" novalidate>
+                    class="p-3 border rounded shadow-sm needs-validation" novalidate>
 
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="usuario" id="usuario" placeholder="Usuario" required>

@@ -79,7 +79,7 @@ $con = conectar();
 
     <!-- TABLE -->
     <main class="container bg-light text-dark pt-2 pb-2">
-        <table class="table">
+        <table class="table table-success table-striped-columns table-hover">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -101,7 +101,7 @@ $con = conectar();
                             <td> <?php echo $fila['Usuario'] ?> </td>
                             <td> <?php echo $fila['Correo'] ?> </td>  
                             <td> <?php echo $fila['nivel'] ?>  </td>
-                            <td><a href="../php/eliminarU.php?user=<?php echo $fila['Usuario'];?>">Eliminar</a></td>
+                            <td><a class="table-link" href="../php/eliminarU.php?user=<?php echo $fila['Usuario'];?>">Eliminar</a></td>
                         </tr>
                     <?php } 
                 ?>
@@ -167,12 +167,12 @@ $con = conectar();
     </footer>
 
     <!-- OffCANVAS Accounts -->
-    <aside class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offCanvasAccounts" aria-labelledby="offcanvaOfAccount">
+    <aside class="offcanvas offcanvas-end text-bg-dark" data-bs-backdrop="static" tabindex="-1" id="offCanvasAccounts" aria-labelledby="offcanvaOfAccount">
 
         <?php if (empty($_SESSION['usuario'])): ?>
             <header class="offcanvas-header">
                 <h2 class="offcanvas-title" id="offcanvaOfAccount">Inicio de sesión</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
             </header>
 
             <hr class="mb-2 hr-grueso">
