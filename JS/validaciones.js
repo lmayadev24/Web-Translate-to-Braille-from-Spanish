@@ -1,18 +1,7 @@
-function validar(Nom, aP, aM, Correo, User, password){
-    let name = Nom.trim();
-    let firsSurname = aP.trim();
-    let secondSurname = aM.trim();
+function validar(Correo){
     let email = Correo.trim();
-    let user = User.trim();
-    let pass = password.trim();
 
     var Regex = /^[a-zA-Z0-9._%+-]+@(?:gmail|hotmail|outlook|yahoo|live|icloud|protonmail)\.(?:com|es|mx)$/;
-    
-    if (name === "" || firsSurname === "" || secondSurname === "" || user === "" 
-        || email === "" || pass === "") {
-        alert("Todos los campos son obligatorios");
-        return false;
-    }
 
     var validar = Regex.test(email);
     if(validar != true){

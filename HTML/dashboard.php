@@ -1,6 +1,10 @@
 <?php
-    include_once '../php/textos.php';
-    session_start(); //Iniciando una sesion
+include_once '../php/textos.php';
+include_once '../php/consultas.php';
+include_once '../php/conexion.php';
+session_start(); //Iniciando una sesion
+
+$con = conectar();
 ?>
 
 <!DOCTYPE html>
@@ -51,26 +55,12 @@
 
                 <ul class="navbar-nav ms-5 me-2 mb-2 mb-lg-0">
                     <li class="nav-item me-1">
-                        <a class="nav-link nav-btn" aria-current="page" href="translate.php">Traductor</a>
+                        <a class="nav-link nav-btn" aria-current="page" href="#">Traductor</a>
                     </li>
 
-                    <?php if (empty($_SESSION['usuario'])): ?>
-                        <li class="nav-item me-1">
-                            <a class="nav-link disable" aria-current="page" href="#">Lecciones</a>
-                        </li>
-                    <?php else: ?>
-                        <li class="nav-item me-1">
-                            <a class="nav-link nav-btn" aria-current="page" href="#">Lecciones</a>
-                        </li>
-                    <?php endif; ?>
-
-                    <!-- HTML que solo se muestra si el usuario es Administrador o Supervisor -->
-                    <?php if (isset($_SESSION['nivel']) && isset($_SESSION['usuario']) &&
-                            ($_SESSION['nivel'] === 'Administrador' || $_SESSION['nivel'] === 'Supervisor')): ?>
-                        <li class="nav-item me-1">
-                            <a class="nav-link nav-btn" href="dashboard.php">Administrar</a>
-                        </li>
-                    <?php endif; ?>
+                    <li class="nav-item me-1">
+                        <a class="nav-link nav-btn" aria-current="page" href="#">Lecciones</a>
+                    </li>
 
                     <!-- HTML que cambia el botón si no hay un login valido -->
                     <?php if (empty($_SESSION['usuario'])): ?>
@@ -87,61 +77,40 @@
         </nav>
     </header>
 
-    <main class="container text-dark pt-2 pb-2">
-        <section id="carouselBraille" class="carousel carousel-dark slide" data-bs-ride="carousel">
-            <ol class="carousel-indicators">
-                <li type="button" data-bs-target="#carouselBraille" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></li>
-                <li type="button" data-bs-target="#carouselBraille" data-bs-slide-to="1" aria-label="Slide 2"></li>
-                <li type="button" data-bs-target="#carouselBraille" data-bs-slide-to="2" aria-label="Slide 3"></li>
-            </ol>
-
-            <section class="carousel-inner mt-2 mb-2">
-                <article class="carousel-item active" data-bs-interval="10000">
-                    <figure class="w-100 m-0">
-                        <img src="../image/Braille1.jpg" class="d-block w-100 img-fluid rounded" alt="Imagen accesibilidad 1">
-
-                        <figcaption class="carousel-caption d-none d-md-block text-white">
-                            <h5>Accesibilidad y Orientación</h5>
-                            <p>Una persona utiliza un mapa táctil en un espacio público.</p>
-                        </figcaption>
-                    </figure>
-                </article>
-
-                <article class="carousel-item" data-bs-interval="2000">
-                    <figure class="w-100 m-0">
-                        <img src="../image/Braille2.jpg" class="d-block w-100 img-fluid rounded" alt="Imagen braille 2">
-
-                        <figcaption class="carousel-caption d-none d-md-block text-white">
-                            <h5>Lectura Táctil</h5>
-                            <p>Un primer plano de una mano deslizando las yemas de los dedos.</p>
-                        </figcaption>
-                    </figure>
-                </article>
-
-                <article class="carousel-item">
-                    <figure class="w-100 m-0">
-                        <img src="../image/Braille3.jpg" class="d-block w-100 img-fluid rounded" alt="Imagen braille 3">
-
-                        <figcaption class="carousel-caption d-none d-md-block text-white">
-                            <h5>Aprender a "Ver" con las Manos</h5>
-                            <p>Un fotomontaje que contrasta dos escenas de aprendizaje.</p>
-                        </figcaption>
-                    </figure>
-                </article>
-            </section>
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselBraille" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Anterior</span>
-            </button>
-
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselBraille" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Siguiente</span>
-            </button>
-        </section>
+    <!-- TABLE -->
+    <main class="container bg-light text-dark pt-2 pb-2">
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido Paterno</th>
+                <th scope="col">Apellido Materno</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Email</th>
+                <th scope="col">Nivel</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    $datos = datos($con);
+                    while($fila = $datos->fetch_assoc()){
+                        ?>
+                        <tr>
+                            <th scope="row"> <?php echo $fila['ID_Usuario'] ?> </th>
+                            <td> <?php echo $fila['Nombre'] ?> </td>
+                            <td> <?php echo $fila['aPaterno'] ?> </td>
+                            <td> <?php echo $fila['aMaterno'] ?> </td>
+                            <td> <?php echo $fila['Usuario'] ?> </td>
+                            <td> <?php echo $fila['Correo'] ?> </td>  
+                            <td> <?php echo $fila['nivel'] ?>  </td>
+                        </tr>
+                    <?php } 
+                ?>
+            </tbody>
+        </table>
     </main>
-        
+
     <footer class="container-fluid background_footer text-dark pt-5 pb-4">
         <section class="text-center text-md-start">
             <div class="row text-center text-md-start">

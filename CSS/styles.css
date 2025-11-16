@@ -57,21 +57,21 @@ body {
 }
 
 /* Boton con cambio de color*/
-.btn-link.boton-btn {
+.nav-link.nav-btn {
     color: black !important;
     text-decoration: none !important;
 }
 
-.btn-link.boton-btn:hover {
+.nav-link.nav-btn:hover {
     color: #fff6e0 !important;
 }
 
-.btn-link.footer-btn {
+.nav-link.footer-btn {
     color: black !important;
 }
 
-.btn-link.footer-btn:hover {
-    color: #fff6e0 !important;
+.nav-link.footer-btn:hover {
+    color: #788199 !important;
 }
 
 /* Linea mas ancha */

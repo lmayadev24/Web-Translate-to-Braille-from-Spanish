@@ -1,7 +1,6 @@
 <?php
 ob_start();
 session_start(); //Inicia sesion
-session_unset(); //Limpia valores antiguos
 
 include 'conexion.php';
 $con = conectar();
@@ -32,11 +31,11 @@ function login($con, $User, $Password){
             $_SESSION['nivel'] = $usuario['nivel'];
 
             // Redirección
-            header("Location: ../HTML/index.php");
+            header("Location: ../html/index.php");
             exit;
 
         } else {
-            header("Location: ../HTML/index.php?error=1");
+            header("Location: ../html/index.php?error=1");
             exit;
         }
 

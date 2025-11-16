@@ -51,18 +51,8 @@
 
                 <ul class="navbar-nav ms-5 me-2 mb-2 mb-lg-0">
                     <li class="nav-item me-1">
-                        <a class="nav-link nav-btn" aria-current="page" href="translate.php">Traductor</a>
+                        <a class="nav-link nav-btn" aria-current="page" href="#">Lecciones</a>
                     </li>
-
-                    <?php if (empty($_SESSION['usuario'])): ?>
-                        <li class="nav-item me-1">
-                            <a class="nav-link disable" aria-current="page" href="#">Lecciones</a>
-                        </li>
-                    <?php else: ?>
-                        <li class="nav-item me-1">
-                            <a class="nav-link nav-btn" aria-current="page" href="#">Lecciones</a>
-                        </li>
-                    <?php endif; ?>
 
                     <!-- HTML que solo se muestra si el usuario es Administrador o Supervisor -->
                     <?php if (isset($_SESSION['nivel']) && isset($_SESSION['usuario']) &&
@@ -87,61 +77,30 @@
         </nav>
     </header>
 
-    <main class="container text-dark pt-2 pb-2">
-        <section id="carouselBraille" class="carousel carousel-dark slide" data-bs-ride="carousel">
-            <ol class="carousel-indicators">
-                <li type="button" data-bs-target="#carouselBraille" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></li>
-                <li type="button" data-bs-target="#carouselBraille" data-bs-slide-to="1" aria-label="Slide 2"></li>
-                <li type="button" data-bs-target="#carouselBraille" data-bs-slide-to="2" aria-label="Slide 3"></li>
-            </ol>
+    <!-- MAIN -->
+    <main class="container">
+        <section class="row g-3 justify-content-around">
+            <article class="mb-3 col-12 col-md-6">
+                <label for="textSpanish" class="form-label">Español</label>
+                <textarea class="form-control textarea-estilizado" id="textSpanish" placeholder="Texto en Español"></textarea>
+            </article>
 
-            <section class="carousel-inner mt-2 mb-2">
-                <article class="carousel-item active" data-bs-interval="10000">
-                    <figure class="w-100 m-0">
-                        <img src="../image/Braille1.jpg" class="d-block w-100 img-fluid rounded" alt="Imagen accesibilidad 1">
+            <article class="mb-3 col-12 col-md-6">
+                <label for="textBraille" class="form-label">Braille</label>
+                <textarea class="form-control textarea-estilizado" id="textBraille" placeholder="Texto en Braille" disabled></textarea>
+            </article>
+        </section>
 
-                        <figcaption class="carousel-caption d-none d-md-block text-white">
-                            <h5>Accesibilidad y Orientación</h5>
-                            <p>Una persona utiliza un mapa táctil en un espacio público.</p>
-                        </figcaption>
-                    </figure>
-                </article>
-
-                <article class="carousel-item" data-bs-interval="2000">
-                    <figure class="w-100 m-0">
-                        <img src="../image/Braille2.jpg" class="d-block w-100 img-fluid rounded" alt="Imagen braille 2">
-
-                        <figcaption class="carousel-caption d-none d-md-block text-white">
-                            <h5>Lectura Táctil</h5>
-                            <p>Un primer plano de una mano deslizando las yemas de los dedos.</p>
-                        </figcaption>
-                    </figure>
-                </article>
-
-                <article class="carousel-item">
-                    <figure class="w-100 m-0">
-                        <img src="../image/Braille3.jpg" class="d-block w-100 img-fluid rounded" alt="Imagen braille 3">
-
-                        <figcaption class="carousel-caption d-none d-md-block text-white">
-                            <h5>Aprender a "Ver" con las Manos</h5>
-                            <p>Un fotomontaje que contrasta dos escenas de aprendizaje.</p>
-                        </figcaption>
-                    </figure>
-                </article>
-            </section>
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselBraille" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Anterior</span>
-            </button>
-
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselBraille" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Siguiente</span>
+        <section class="d-flex justify-content-center mb-3">
+            <button class="btn btn-primary" type="submit"
+                onclick="Traducir(document.getElementById('textSpanish'),
+                                document.getElementById('textBraille'))">
+                Traducir
             </button>
         </section>
     </main>
-        
+
+
     <footer class="container-fluid background_footer text-dark pt-5 pb-4">
         <section class="text-center text-md-start">
             <div class="row text-center text-md-start">
@@ -358,6 +317,7 @@
     <!--Scripts-->
     <script src="../js/componentes.js"></script>
     <script src="../js/validaciones.js"></script>
+    <script src="../JS/Traduccion.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
